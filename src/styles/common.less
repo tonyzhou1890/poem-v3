@@ -1,0 +1,44 @@
+@bgc1: #F0EFE2;
+@bgc2: brown;
+@bgc3: antiquewhite;
+@color: white;
+@border: lightgray;
+
+* {
+  box-sizing: border-box;
+}
+
+body, html, h1, h2, div, p, pre {
+  padding: 0;
+  margin: 0;
+}
+
+body, html {
+  width: 100%;
+}
+
+body {
+  background-color: @bgc1;
+}
+
+a {
+  text-decoration: none;
+}
+
+.cp {
+  cursor: pointer;
+}
+
+.cp-line {
+  cursor: pointer;
+}
+
+.cp-line:hover {
+  text-decoration: underline;
+}
+
+.ellipse {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

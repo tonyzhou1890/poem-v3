@@ -3,6 +3,22 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import './icons' // icon
+
+import '@/styles/index.less'
+
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css'// progress bar style
+
+NProgress.configure({ showSpinner: false })// NProgress Configuration
+router.beforeEach((to, from, next) => {
+  NProgress.start() // start progress bar
+  next()
+})
+
+router.afterEach(() => {
+  NProgress.done() // finish progress bar
+})
 
 Vue.config.productionTip = false
 

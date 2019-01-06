@@ -1,0 +1,99 @@
+<template>
+  <div class="list">
+    <poem class="poem-list" :data="data" />
+    <pagination
+      :totalPage="totalPage"
+      :curPage="curPage"
+      @to-page="toPage"
+      @page-change="pageChange"
+      class="poem-pagination" />
+  </div>
+</template>
+
+<script>
+import { getPoemList } from '@/api/main'
+import Poem from '@/components/Poem'
+import Pagination from '@/components/Pagination'
+export default {
+  name: 'PoemList',
+  components: {
+    Poem,
+    Pagination
+  },
+  data() {
+    return {
+      data: [],
+      limit: null,
+      total: null,
+      curPage: Number(this.$route.query.p)
+    }
+  },
+  computed: {
+    totalPage() {
+      if (isNaN(Number(this.limit)) || isNaN(Number(this.total))) return 1
+      return Math.ceil(this.total / this.limit)
+    }
+  },
+  created() {
+    this.getPoemList()
+  },
+  methods: {
+    // 获取诗词列表
+    getPoemList() {
+      getPoemList(this.$route.query)
+        .then(res => {
+          const temp = res.data.data
+          this.data = temp.data
+          this.limit = temp.limit
+          this.total = temp.total
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    },
+    // 页码加一或减一
+    toPage(direction) {
+      let temp = this.curPage
+      switch (direction) {
+        case 'pre':
+          temp--
+          break
+        case 'next':
+          temp++
+          break
+        case 'cur':
+          break
+      }
+      if (temp <= 1) temp = 1
+      if (temp >= this.totalPage) temp = this.totalPage
+      this.curPage = temp
+      this.changeRoute()
+    },
+    // 页码变化
+    pageChange(page) {
+      if (isNaN(Number(page))) return
+      this.curPage = Number(page)
+    },
+    // 改变路由
+    changeRoute() {
+      this.$router.push({ name: 'PoemList', query: {poem: 'all', p: this.curPage} })
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.list {
+  .poem-pagination {
+    margin-top: 30px;
+  }
+}
+</style>
+
+<style lang="less">
+.list {
+  .poem-list {
+    text-align: center;
+  }
+}
+</style>
