@@ -8,7 +8,7 @@
         <a class="cp" @click="goPoemList"><p>诗词</p></a>
         <a class="cp" @click="goAuthorList"><p>作者</p></a>
       </div>
-      <div class = "search"><input type="text" placeholder="作者/诗歌" v-model="keyword" @keyup.enter="search"><svg-icon icon-class="search" class = "iconfont icon-search" @click="search"></svg-icon></div>
+      <div class = "search"><input type="text" placeholder="作者/诗歌" v-model="keyword" @keyup.enter="search"><svg-icon icon-class="search" class = "iconfont icon-search" @click.native="search"></svg-icon></div>
     </div>
   </header>
 </template>
@@ -23,6 +23,15 @@ export default {
   methods: {
     search() {
       console.log(this.keyword)
+      const query = {
+        keyword: this.keyword,
+        ap: 1,
+        tp: 1,
+        cp: 1,
+        type: 'author',
+        t: new Date().getTime()
+      }
+      this.$router.push({ name: 'Search', query })
     },
     // 回到首页
     goHome() {
@@ -96,7 +105,7 @@ header {
           padding: 0;
           padding-left: 10px;
         }
-        i {
+        i, .icon-search {
           cursor: pointer;
         }
       }

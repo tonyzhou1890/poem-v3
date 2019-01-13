@@ -1,7 +1,7 @@
 <template>
   <div class="pagination">
     <span
-      :class = "[buttonClass,totalPage <= 1 ? '' : readyClass]"
+      :class="[buttonClass,totalPage <= 1 ? '' : readyClass]"
       @click="page('pre')">&lt;</span>
     <input
       type="number"
@@ -9,10 +9,10 @@
       @change="pageChange"
       @keyup.enter="page('cur')"
       min="1"
-      :max="totalPage">
-    <span>/{{totalPage}}</span>
+      :max="total">
+    <span>/{{total}}</span>
     <span
-      :class = "[buttonClass,curPage >= totalPage ? '' : readyClass]"
+      :class="[buttonClass,curPage >= totalPage ? '' : readyClass]"
       @click="page('next')">&gt;</span>
   </div>
 </template>
@@ -36,15 +36,23 @@ export default {
       tempCurPage: null
     }
   },
-  computed: {},
+  computed: {
+    total() {
+      return isNaN(this.totalPage) ? 1 : this.totalPage
+    }
+  },
   methods: {
     page: function(direction) {
       if (isNaN(Number(direction)) && direction !== 'next' && direction !== 'pre' && direction !== 'cur') {
         return
       }
+      if (direction === 'next' && this.curPage >= this.total) return
+      if (direction === 'pre' && this.curPage <= 1) return
+      if (direction === 'cur' && this.$route.query.p === this.curPage) return
       this.$emit('to-page', direction)
     },
     pageChange(e) {
+      if (this.curPage === this.total && e.target.value >= this.curPage) return
       this.$emit('page-change', e.target.value)
     }
   }
@@ -73,12 +81,13 @@ export default {
     text-align: center;
   }
   .button {
-    cursor: pointer;
+    cursor: not-allowed;
     width: 80px;
     background-color: @bgc;
     border: 1px solid @border;
   }
   .ready:hover {
+    cursor: pointer;
     background-color: @bgc2;
   }
 }

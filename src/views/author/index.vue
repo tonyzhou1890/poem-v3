@@ -1,23 +1,29 @@
 <template>
-  <div class="list">
-    <poem class="poem-list" :data="data" />
-    <pagination
-      :totalPage="totalPage"
-      :curPage="curPage"
-      @to-page="toPage"
-      @page-change="pageChange"
-      class="poem-pagination" />
+  <div class="author-container">
+    <tab :tabs="tabs" @click-tab="clickTab" />
+    <div class="poems" v-show="curTab === '诗词'">
+      <poem class="poem-list" :data="data" :disableAuthor="true" />
+      <pagination
+        :totalPage="totalPage"
+        :curPage="curPage"
+        @to-page="toPage"
+        @page-change="pageChange"
+        class="poem-pagination" />
+    </div>
+    <div class="author" v-show="curTab === '简介'" v-html="profile"></div>
   </div>
 </template>
 
 <script>
 import { getInfo } from '@/api/main'
 import Poem from '@/components/Poem'
+import Tab from '@/components/Tab'
 import Pagination from '@/components/Pagination'
 export default {
-  name: 'PoemList',
+  name: 'Author',
   components: {
     Poem,
+    Tab,
     Pagination
   },
   data() {
@@ -25,7 +31,19 @@ export default {
       data: [],
       limit: null,
       total: null,
-      curPage: Number(this.$route.query.p)
+      curPage: Number(this.$route.query.p),
+      tabs: [
+        {
+          name: '诗词',
+          value: 1
+        },
+        {
+          name: '简介',
+          value: 2
+        }
+      ],
+      profile: '',
+      curTab: '诗词'
     }
   },
   computed: {
@@ -43,9 +61,10 @@ export default {
       getInfo(this.$route.query)
         .then(res => {
           const temp = res.data.data
-          this.data = temp.data
+          this.data = temp.poems.length ? temp.poems : [{zhaiyao: '暂无内容'}]
           this.limit = temp.limit
           this.total = temp.total
+          this.profile = temp.authorInfo.jieshao || '暂无内容'
         })
         .catch(e => {
           console.log(e)
@@ -76,22 +95,37 @@ export default {
     },
     // 改变路由
     changeRoute() {
-      this.$router.push({ name: 'PoemList', query: {poem: 'all', p: this.curPage} })
+      let query = JSON.parse(JSON.stringify(this.$route.query))
+      query.p = this.curPage
+      query.t = new Date().getTime()
+      this.$router.push({ name: 'Author', query })
+    },
+    // 点击tab
+    clickTab(item) {
+      this.curTab = item.name
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.list {
+@import '~@/styles/variables.less';
+.author-container {
   .poem-pagination {
     margin-top: 30px;
+  }
+  .author {
+    padding: 10px;
+    box-sizing: border-box;
+    border:1px solid @border;
+    background-color: @bgc3;
+    white-space: pre-line;
   }
 }
 </style>
 
 <style lang="less">
-.list {
+.author-container {
   .poem-list {
     text-align: center;
   }

@@ -29,6 +29,16 @@ export default new Router({
           path: 'poemList',
           name: 'PoemList',
           component: () => import('@/views/poemList/index')
+        },
+        {
+          path: 'author',
+          name: 'Author',
+          component: () => import('@/views/author/index')
+        },
+        {
+          path: 'search',
+          name: 'Search',
+          component: () => import('@/views/search/index')
         }
       ]
     }

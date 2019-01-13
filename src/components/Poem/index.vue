@@ -5,7 +5,7 @@
       :key="index"
       class="poem">
       <h1 class="title cp-line" v-html="item.mingcheng" @click="clickTitle(item)" /><br>
-      <p class="author cp-line" v-html="item.zuozhe" /><br>
+      <p class="author" :class="[disableAuthor ? '' : 'cp-line']" v-html="item.zuozhe" @click="clickAuthor(item)" /><br>
       <pre class="text" v-html="item.zhaiyao"></pre>
     </section>
   </div>
@@ -17,12 +17,23 @@ export default {
     data: {
       type: Array,
       required: true
+    },
+    disableAuthor: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
     clickTitle(item) {
       const id = item._id
       this.$router.push({ name: 'Article', query: {id} })
+    },
+    clickAuthor(item) {
+      if (this.disableAuthor) return
+      const author = item.zuozhe
+      const p = 1
+      const t = new Date().getTime()
+      this.$router.push({ name: 'Author', query: {author, p, t} })
     }
   }
 }

@@ -1,13 +1,13 @@
 <template>
   <div id="article">
     <h1 class = "title">{{data.mingcheng}}</h1>
-    <p class = "author cp-line">{{data.zuozhe}}</p>
+    <p class = "author">{{data.zuozhe}}</p>
     <p class = "content">{{data.yuanwen}}</p>
   </div>
 </template>
 
 <script>
-import { getArticleInfo } from '@/api/main'
+import { getInfo } from '@/api/main'
 export default {
   name: 'Article',
   data() {
@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     getArticleInfo() {
-      getArticleInfo(this.$route.query)
+      getInfo(this.$route.query)
         .then(res => {
           this.data = res.data.data
         })

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { getAuthorList } from '@/api/main'
+import { getInfo } from '@/api/main'
 import Author from '@/components/Author'
 import Pagination from '@/components/Pagination'
 export default {
@@ -40,7 +40,7 @@ export default {
   methods: {
     // 获取作者列表
     getAuthorList() {
-      getAuthorList(this.$route.query)
+      getInfo(this.$route.query)
         .then(res => {
           const temp = res.data.data
           this.data = temp.data

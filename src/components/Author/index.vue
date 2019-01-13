@@ -2,7 +2,7 @@
   <div id="authors">
     <a
        v-for="(author, index) in data"
-       :key="index"><span class="cp-line">{{author}}</span></a>
+       :key="index"><span class="cp-line" @click="clickAuthor(author)">{{author}}</span></a>
   </div>
 </template>
 
@@ -12,6 +12,14 @@ export default {
     data: {
       type: Array,
       required: true
+    }
+  },
+  methods: {
+    clickAuthor(item) {
+      const author = item
+      const p = 1
+      const t = new Date().getTime()
+      this.$router.push({ name: 'Author', query: {author, p, t} })
     }
   }
 }
