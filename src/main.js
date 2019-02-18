@@ -5,6 +5,8 @@ import App from './App'
 import router from './router'
 import './icons' // icon
 
+import './directives/loading' // v-loading
+
 import '@/styles/index.less'
 
 import NProgress from 'nprogress' // progress bar

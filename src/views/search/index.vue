@@ -1,7 +1,7 @@
 <template>
   <div class="author-container">
     <tab :tabs="tabs" :tab="curTab" @click-tab="clickTab" />
-    <div class="poems" v-show="curTab === 1">
+    <div class="poems" v-show="curTab === 1" v-loading="loading">
       <poem class="poem-list" :data="data.author" :disableAuthor="true" />
       <pagination
         :totalPage="totalPage"
@@ -10,7 +10,7 @@
         @page-change="pageChange"
         class="poem-pagination" />
     </div>
-    <div class="poems" v-show="curTab === 2">
+    <div class="poems" v-show="curTab === 2" v-loading="loading">
       <poem class="poem-list" :data="data.title"/>
       <pagination
         :totalPage="totalPage"
@@ -19,7 +19,7 @@
         @page-change="pageChange"
         class="poem-pagination" />
     </div>
-    <div class="poems" v-show="curTab === 3">
+    <div class="poems" v-show="curTab === 3" v-loading="loading">
       <poem class="poem-list" :data="data.content"/>
       <pagination
         :totalPage="totalPage"
@@ -50,6 +50,7 @@ export default {
         title: [],
         content: []
       },
+      loading: false,
       limit: {
         author: null,
         title: null,
@@ -126,6 +127,7 @@ export default {
           query.p = this.curPage.author
           break
       }
+      this.loading = true
       getInfo(query)
         .then(res => {
           const temp = res.data.data
@@ -149,9 +151,11 @@ export default {
           this.data[this.type] = temp.data.length ? temp.data : [{zuozhe: '暂无记录'}]
           this.limit[this.type] = temp.limit
           this.total[this.type] = temp.total
+          this.loading = false
         })
         .catch(e => {
           console.log(e)
+          this.loading = false
         })
     },
     // 页码加一或减一

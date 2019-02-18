@@ -1,5 +1,5 @@
 <template>
-  <div class="author-container">
+  <div class="author-container" v-loading="loading">
     <tab :tabs="tabs" @click-tab="clickTab" />
     <div class="poems" v-show="curTab === '诗词'">
       <poem class="poem-list" :data="data" :disableAuthor="true" />
@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       data: [],
+      loading: false,
       limit: null,
       total: null,
       curPage: Number(this.$route.query.p),
@@ -58,6 +59,7 @@ export default {
   methods: {
     // 获取诗词列表
     getPoemList() {
+      this.loading = true
       getInfo(this.$route.query)
         .then(res => {
           const temp = res.data.data
@@ -65,9 +67,11 @@ export default {
           this.limit = temp.limit
           this.total = temp.total
           this.profile = temp.authorInfo.jieshao || '暂无内容'
+          this.loading = false
         })
         .catch(e => {
           console.log(e)
+          this.loading = false
         })
     },
     // 页码加一或减一

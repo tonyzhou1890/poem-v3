@@ -1,5 +1,5 @@
 <template>
-  <div id="article">
+  <div id="article" v-loading="loading">
     <h1 class = "title">{{data.mingcheng}}</h1>
     <p class = "author">{{data.zuozhe}}</p>
     <p class = "content">{{data.yuanwen}}</p>
@@ -12,7 +12,8 @@ export default {
   name: 'Article',
   data() {
     return {
-      data: {}
+      data: {},
+      loading: false
     }
   },
   created() {
@@ -20,12 +21,15 @@ export default {
   },
   methods: {
     getArticleInfo() {
+      this.loading = true
       getInfo(this.$route.query)
         .then(res => {
           this.data = res.data.data
+          this.loading = false
         })
         .catch(e => {
           console.log(e)
+          this.loading = false
         })
     }
   }

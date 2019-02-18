@@ -18,4 +18,28 @@ npm run build
 npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## 项目说明
+
+&emsp;&emsp;一个简单的诗词网站。功能不多，比较适合练手。词库来源于网络。
+
+- 首页随机诗词
+
+- 可根据作者、标题、内容搜索
+
+- 可查看诗词列表
+
+- 可查看作者列表
+
+- 可查看作者诗词列表
+
+- 可查看诗词详情
+
+## 版本说明
+
+### v3.0.0
+
+1. 将多页网站（2.0）变成 spa 网站。所以页面文件前端管理，不再需要后端读取。
+
+2. 真正做到前后端分离。前端负责页面，后端提供 api。
+
+### v3.0.1

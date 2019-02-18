@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-loading="loading">
     <div class="poems">
       <poem :data="poems" />
     </div>
@@ -22,7 +22,8 @@ export default {
   data() {
     return {
       authors: [],
-      poems: []
+      poems: [],
+      loading: false
     }
   },
   created() {
@@ -31,6 +32,7 @@ export default {
   },
   methods: {
     getHomeInfo() {
+      this.loading = true
       const params = {
         home: true
       }
@@ -38,9 +40,11 @@ export default {
         .then(res => {
           this.authors = res.data.data.authors
           this.poems = res.data.data.poems
+          this.loading = false
         })
         .catch(e => {
           console.log(e)
+          this.loading = false
         })
     }
   }
