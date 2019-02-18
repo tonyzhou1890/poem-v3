@@ -1,5 +1,5 @@
 <template>
-  <div class="list">
+  <div class="list" v-loaing="loading">
     <poem class="poem-list" :data="data" />
     <pagination
       :totalPage="totalPage"
@@ -23,6 +23,7 @@ export default {
   data() {
     return {
       data: [],
+      loading: false,
       limit: null,
       total: null,
       curPage: Number(this.$route.query.p)
@@ -40,15 +41,18 @@ export default {
   methods: {
     // 获取诗词列表
     getPoemList() {
+      this.loading = true
       getInfo(this.$route.query)
         .then(res => {
           const temp = res.data.data
           this.data = temp.data
           this.limit = temp.limit
           this.total = temp.total
+          this.loading = false
         })
         .catch(e => {
           console.log(e)
+          this.loading = false
         })
     },
     // 页码加一或减一

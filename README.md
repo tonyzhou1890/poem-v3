@@ -43,3 +43,7 @@ npm run build --report
 2. 真正做到前后端分离。前端负责页面，后端提供 api。
 
 ### v3.0.1
+
+1. 添加 favicon.ico
+
+2. 添加 v-loading 指令

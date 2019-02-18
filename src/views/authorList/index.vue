@@ -1,5 +1,5 @@
 <template>
-  <div class="list">
+  <div class="list" v-loading="loading">
     <author class="author-list" :data="data" />
     <pagination
       :totalPage="totalPage"
@@ -23,6 +23,7 @@ export default {
   data() {
     return {
       data: [],
+      loading: false,
       limit: null,
       total: null,
       curPage: Number(this.$route.query.p)
@@ -40,14 +41,17 @@ export default {
   methods: {
     // 获取作者列表
     getAuthorList() {
+      this.loading = true
       getInfo(this.$route.query)
         .then(res => {
           const temp = res.data.data
           this.data = temp.data
           this.limit = temp.limit
           this.total = temp.total
+          this.loading = false
         })
         .catch(e => {
+          this.loading = false
           console.log(e)
         })
     },
