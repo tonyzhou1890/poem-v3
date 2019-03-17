@@ -6,6 +6,8 @@
       <pagination
         :totalPage="totalPage"
         :curPage="curPage"
+        :pre="pre"
+        :next="next"
         @to-page="toPage"
         @page-change="pageChange"
         class="poem-pagination" />
@@ -47,10 +49,32 @@ export default {
       curTab: '诗词'
     }
   },
+  metaInfo() {
+    return {
+      title: `作者--${this.$route.query.author}`,
+      meta: [
+        { name: 'description', content: `${this.$route.query.author}的诗词` }
+      ]
+    }
+  },
   computed: {
     totalPage() {
       if (isNaN(Number(this.limit)) || isNaN(Number(this.total))) return 1
       return Math.ceil(this.total / this.limit)
+    },
+    pre() {
+      const temp = {}
+      temp.name = 'Author'
+      temp.query = JSON.parse(JSON.stringify(this.$route.query))
+      temp.query.p = this.curPage - 1 < 1 ? 1 : this.curPage - 1
+      return temp
+    },
+    next() {
+      const temp = {}
+      temp.name = 'Author'
+      temp.query = JSON.parse(JSON.stringify(this.$route.query))
+      temp.query.p = this.curPage + 1 > this.totalPage ? this.totalPage : this.curPage + 1
+      return temp
     }
   },
   created() {
@@ -101,7 +125,7 @@ export default {
     changeRoute() {
       let query = JSON.parse(JSON.stringify(this.$route.query))
       query.p = this.curPage
-      query.t = new Date().getTime()
+      // query.t = new Date().getTime()
       this.$router.push({ name: 'Author', query })
     },
     // 点击tab

@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <keep-alive :include="['Home', 'Author', 'Search']">
+    <keep-alive :include="['Home']">
       <router-view :key="key"/>
     </keep-alive>
   </div>

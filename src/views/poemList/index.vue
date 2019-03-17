@@ -1,9 +1,11 @@
 <template>
-  <div class="list" v-loaing="loading">
+  <div class="list" v-loading="loading">
     <poem class="poem-list" :data="data" />
     <pagination
       :totalPage="totalPage"
       :curPage="curPage"
+      :pre="pre"
+      :next="next"
       @to-page="toPage"
       @page-change="pageChange"
       class="poem-pagination" />
@@ -29,10 +31,32 @@ export default {
       curPage: Number(this.$route.query.p)
     }
   },
+  metaInfo() {
+    return {
+      title: '诗词列表',
+      meta: [
+        { name: 'description', content: '诗词列表' }
+      ]
+    }
+  },
   computed: {
     totalPage() {
       if (isNaN(Number(this.limit)) || isNaN(Number(this.total))) return 1
       return Math.ceil(this.total / this.limit)
+    },
+    pre() {
+      const temp = {}
+      temp.name = 'PoemList'
+      temp.query = JSON.parse(JSON.stringify(this.$route.query))
+      temp.query.p = this.curPage - 1 < 1 ? 1 : this.curPage - 1
+      return temp
+    },
+    next() {
+      const temp = {}
+      temp.name = 'PoemList'
+      temp.query = JSON.parse(JSON.stringify(this.$route.query))
+      temp.query.p = this.curPage + 1 > this.totalPage ? this.totalPage : this.curPage + 1
+      return temp
     }
   },
   created() {

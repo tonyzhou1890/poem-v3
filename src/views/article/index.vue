@@ -16,6 +16,14 @@ export default {
       loading: false
     }
   },
+  metaInfo() {
+    return {
+      title: this.data.mingcheng,
+      meta: [
+        { name: 'description', content: `《${this.data.mingcheng}》的内容` }
+      ]
+    }
+  },
   created() {
     this.getArticleInfo()
   },

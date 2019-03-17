@@ -28,8 +28,8 @@ export default {
         ap: 1,
         tp: 1,
         cp: 1,
-        type: 'author',
-        t: new Date().getTime()
+        type: 'author'
+        // t: new Date().getTime()
       }
       this.$router.push({ name: 'Search', query })
     },

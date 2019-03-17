@@ -26,6 +26,14 @@ export default {
       loading: false
     }
   },
+  metaInfo() {
+    return {
+      title: '诗词',
+      meta: [
+        { name: 'description', content: '简单的诗词网站，25万首诗词任欣赏。' }
+      ]
+    }
+  },
   created() {
     if (this.poems.length) return
     this.getHomeInfo()

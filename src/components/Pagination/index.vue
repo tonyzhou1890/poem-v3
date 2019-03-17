@@ -1,8 +1,12 @@
 <template>
   <div class="pagination">
+    <router-link v-if="hasPre" :to="pre">
+      <span
+        :class="[buttonClass,hasPre ? '' : 'disabled']" >&lt;</span>
+    </router-link>
     <span
-      :class="[buttonClass,totalPage <= 1 ? '' : readyClass]"
-      @click="page('pre')">&lt;</span>
+      v-if="!hasPre"
+      :class="[buttonClass,hasPre ? '' : 'disabled']" >&lt;</span>
     <input
       type="number"
       :value="curPage"
@@ -11,9 +15,13 @@
       min="1"
       :max="total">
     <span>/{{total}}</span>
+    <router-link v-if="hasNext" :to="next">
+      <span
+        :class="[buttonClass,hasNext ? '' : 'disabled']" >&gt;</span>
+    </router-link>
     <span
-      :class="[buttonClass,curPage >= totalPage ? '' : readyClass]"
-      @click="page('next')">&gt;</span>
+      v-if="!hasNext"
+      :class="[buttonClass,hasNext ? '' : 'disabled']" >&gt;</span>
   </div>
 </template>
 
@@ -27,18 +35,35 @@ export default {
     curPage: {
       type: Number,
       required: true
+    },
+    pre: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    next: {
+      type: Object,
+      default() {
+        return {}
+      }
     }
   },
   data() {
     return {
       buttonClass: 'button',
-      readyClass: 'ready',
       tempCurPage: null
     }
   },
   computed: {
     total() {
       return isNaN(this.totalPage) ? 1 : this.totalPage
+    },
+    hasPre() {
+      return this.curPage > 1 && this.totalPage > 1
+    },
+    hasNext() {
+      return this.curPage < this.totalPage
     }
   },
   methods: {
@@ -81,13 +106,13 @@ export default {
     text-align: center;
   }
   .button {
-    cursor: not-allowed;
+    cursor: pointer;
     width: 80px;
     background-color: @bgc;
     border: 1px solid @border;
   }
-  .ready:hover {
-    cursor: pointer;
+  .disabled {
+    cursor: not-allowed;
     background-color: @bgc2;
   }
 }

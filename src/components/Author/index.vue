@@ -1,8 +1,9 @@
 <template>
   <div id="authors">
-    <a
-       v-for="(author, index) in data"
-       :key="index"><span class="cp-line" @click="clickAuthor(author)">{{author}}</span></a>
+    <router-link
+      v-for="(author, index) in data"
+      :key="index"
+      :to="{ name: 'Author', query: { author, p: 1 }}"><span class="cp-line">{{author}}</span></router-link>
   </div>
 </template>
 

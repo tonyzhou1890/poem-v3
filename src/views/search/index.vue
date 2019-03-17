@@ -6,6 +6,8 @@
       <pagination
         :totalPage="totalPage"
         :curPage="curPage.author"
+        :pre="pre"
+        :next="next"
         @to-page="toPage"
         @page-change="pageChange"
         class="poem-pagination" />
@@ -15,6 +17,8 @@
       <pagination
         :totalPage="totalPage"
         :curPage="curPage.title"
+        :pre="pre"
+        :next="next"
         @to-page="toPage"
         @page-change="pageChange"
         class="poem-pagination" />
@@ -24,6 +28,8 @@
       <pagination
         :totalPage="totalPage"
         :curPage="curPage.content"
+        :pre="pre"
+        :next="next"
         @to-page="toPage"
         @page-change="pageChange"
         class="poem-pagination" />
@@ -84,10 +90,60 @@ export default {
       curTab: 1
     }
   },
+  metaInfo() {
+    return {
+      title: `搜索--${this.$route.query.keyword}`,
+      meta: [
+        { name: 'description', content: `搜索--${this.$route.query.keyword}` }
+      ]
+    }
+  },
   computed: {
     totalPage() {
       if (isNaN(Number(this.limit[this.type])) || isNaN(Number(this.total[this.type]))) return 1
       return Math.ceil(this.total[this.type] / this.limit[this.type])
+    },
+    pre() {
+      const temp = {}
+      temp.name = 'Search'
+      temp.query = JSON.parse(JSON.stringify(this.$route.query))
+      const p = this.curPage[this.type] - 1 < 1 ? 1 : this.curPage[this.type] - 1
+      switch (this.type) {
+        case 'author':
+          temp.query.ap = p
+          break
+        case 'title':
+          temp.query.tp = p
+          break
+        case 'content':
+          temp.query.cp = p
+          break
+        default:
+          temp.query.ap = p
+          break
+      }
+      return temp
+    },
+    next() {
+      const temp = {}
+      temp.name = 'Search'
+      temp.query = JSON.parse(JSON.stringify(this.$route.query))
+      const p = this.curPage[this.type] + 1 > this.totalPage ? this.totalPage : this.curPage[this.type] + 1
+      switch (this.type) {
+        case 'author':
+          temp.query.ap = p
+          break
+        case 'title':
+          temp.query.tp = p
+          break
+        case 'content':
+          temp.query.cp = p
+          break
+        default:
+          temp.query.ap = p
+          break
+      }
+      return temp
     }
   },
   created() {
@@ -200,7 +256,7 @@ export default {
           break
       }
       query.type = this.type
-      query.t = new Date().getTime()
+      // query.t = new Date().getTime()
       this.$router.push({ name: 'Search', query })
     },
     // 点击tab

@@ -4,8 +4,17 @@
       v-for="(item, index) in data"
       :key="index"
       class="poem">
-      <h1 class="title cp-line" v-html="item.mingcheng" @click="clickTitle(item)" /><br>
-      <p class="author" :class="[disableAuthor ? '' : 'cp-line']" v-html="item.zuozhe" @click="clickAuthor(item)" /><br>
+      <router-link :to="{ name: 'Article', query: { id: item._id }}">
+        <h1 class="title cp-line" v-html="item.mingcheng" />
+      </router-link>
+      <br>
+      <router-link
+        v-if="!disableAuthor"
+        :to="{ name: 'Author', query: { author: item.zuozhe, p: 1 }}">
+        <p class="author" :class="[disableAuthor ? '' : 'cp-line']" v-html="item.zuozhe" />
+      </router-link>
+      <p v-if="disableAuthor" class="author" :class="[disableAuthor ? '' : 'cp-line']" v-html="item.zuozhe" />
+      <br>
       <pre class="text" v-html="item.zhaiyao"></pre>
     </section>
   </div>

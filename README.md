@@ -47,3 +47,7 @@ npm run build --report
 1. 添加 favicon.ico
 
 2. 添加 v-loading 指令
+
+### v3.1.0
+
+1. 将点击 js 跳转换成 router-link
