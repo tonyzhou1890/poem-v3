@@ -1,5 +1,5 @@
 <template>
-  <div id="article" v-loading="loading">
+  <div id="article" class="padding-10" v-loading="loading">
     <h1 class = "title">{{data.mingcheng}}</h1>
     <p class = "author">{{data.zuozhe}}</p>
     <p class = "content">{{data.yuanwen}}</p>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-loading="loading">
+  <div class="container padding-10" v-loading="loading">
     <div class="poems">
       <poem :data="poems" />
     </div>
@@ -68,7 +68,6 @@ export default {
 .container {
   width: 100%;
   margin: auto;
-  padding: 10px;
   display: flex;
   .poems, sidebar {
     min-height: 50px;

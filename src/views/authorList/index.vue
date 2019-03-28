@@ -1,5 +1,5 @@
 <template>
-  <div class="list" v-loading="loading">
+  <div class="list padding-10" v-loading="loading">
     <author class="author-list" :data="data" />
     <pagination
       :totalPage="totalPage"

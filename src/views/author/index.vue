@@ -1,5 +1,5 @@
 <template>
-  <div class="author-container" v-loading="loading">
+  <div class="author-container padding-10" v-loading="loading">
     <tab :tabs="tabs" @click-tab="clickTab" />
     <div class="poems" v-show="curTab === '诗词'">
       <poem class="poem-list" :data="data" :disableAuthor="true" />

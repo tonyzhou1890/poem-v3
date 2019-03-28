@@ -2,11 +2,22 @@
   <header>
     <div class="header">
       <div class = "logo">
-        <a class="cp" @click="goHome"><svg-icon icon-class="poem" class = "iconfont icon-shici logo-icon"></svg-icon></a>
+        <router-link
+          class="cp"
+          :to="{ name: 'Home' }"><svg-icon icon-class="poem" class = "iconfont icon-shici logo-icon"></svg-icon>
+        </router-link>
       </div>
       <div class = "category">
-        <a class="cp" @click="goPoemList"><p>诗词</p></a>
-        <a class="cp" @click="goAuthorList"><p>作者</p></a>
+        <router-link
+          class="cp"
+          :to="{ name: 'PoemList', query: {poem: 'all', p: 1} }">
+          <p>诗词</p>
+        </router-link>
+        <router-link
+          class="cp"
+          :to="{ name: 'AuthorList', query: {author: 'all', p: 1} }">
+          <p>作者</p>
+        </router-link>
       </div>
       <div class = "search"><input type="text" placeholder="作者/诗歌" v-model="keyword" @keyup.enter="search"><svg-icon icon-class="search" class = "iconfont icon-search" @click.native="search"></svg-icon></div>
     </div>

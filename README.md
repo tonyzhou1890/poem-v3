@@ -51,3 +51,9 @@ npm run build --report
 ### v3.1.0
 
 1. 将点击 js 跳转换成 router-link
+
+### v3.1.1
+
+1. 统一各个页面的padding
+
+2. 将导航栏的 js 跳转换成 router-link
