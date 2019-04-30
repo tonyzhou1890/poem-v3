@@ -57,3 +57,7 @@ npm run build --report
 1. 统一各个页面的padding
 
 2. 将导航栏的 js 跳转换成 router-link
+
+### v3.1.2
+
+1. 修复搜索结果标题tab和诗词tab颠倒的问题。

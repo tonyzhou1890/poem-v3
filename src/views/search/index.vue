@@ -79,11 +79,11 @@ export default {
           value: 1
         },
         {
-          name: '诗词',
+          name: '标题',
           value: 2
         },
         {
-          name: '标题',
+          name: '诗词',
           value: 3
         }
       ],
