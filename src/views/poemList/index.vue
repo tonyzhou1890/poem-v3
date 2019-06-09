@@ -48,18 +48,19 @@ export default {
       const temp = {}
       temp.name = 'PoemList'
       temp.query = JSON.parse(JSON.stringify(this.$route.query))
-      temp.query.p = this.curPage - 1 < 1 ? 1 : this.curPage - 1
+      temp.query.p = String(this.curPage - 1 < 1 ? 1 : this.curPage - 1)
       return temp
     },
     next() {
       const temp = {}
       temp.name = 'PoemList'
       temp.query = JSON.parse(JSON.stringify(this.$route.query))
-      temp.query.p = this.curPage + 1 > this.totalPage ? this.totalPage : this.curPage + 1
+      temp.query.p = String(this.curPage + 1 > this.totalPage ? this.totalPage : this.curPage + 1)
       return temp
     }
   },
   created() {
+    console.log('poemList')
     this.getPoemList()
   },
   methods: {
