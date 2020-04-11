@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { getInfo } from '@/api/main'
+import { authorList } from '@/api/main'
 import Author from '@/components/Author'
 import Pagination from '@/components/Pagination'
 export default {
@@ -66,10 +66,10 @@ export default {
     // 获取作者列表
     getAuthorList() {
       this.loading = true
-      getInfo(this.$route.query)
+      authorList({ page: this.$route.query.p })
         .then(res => {
           const temp = res.data.data
-          this.data = temp.data
+          this.data = temp.data.map(item => item.xingming)
           this.limit = temp.limit
           this.total = temp.total
           this.loading = false
@@ -121,6 +121,7 @@ export default {
 <style lang="less">
 .list {
   .author-list {
+    text-align: center;
     span {
       width: 100px;
       text-align: center;

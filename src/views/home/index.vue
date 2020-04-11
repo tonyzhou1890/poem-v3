@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { getInfo } from '@/api/main'
+import { home } from '@/api/main'
 import Poem from '@/components/Poem'
 import Author from '@/components/Author'
 export default {
@@ -44,9 +44,9 @@ export default {
       const params = {
         home: true
       }
-      getInfo(params)
+      home(params)
         .then(res => {
-          this.authors = res.data.data.authors
+          this.authors = res.data.data.authors.map(item => item.xingming)
           this.poems = res.data.data.poems
           this.loading = false
         })

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { getInfo } from '@/api/main'
+import { getPoemsByAuthor } from '@/api/main'
 import Poem from '@/components/Poem'
 import Tab from '@/components/Tab'
 import Pagination from '@/components/Pagination'
@@ -84,10 +84,13 @@ export default {
     // 获取诗词列表
     getPoemList() {
       this.loading = true
-      getInfo(this.$route.query)
+      getPoemsByAuthor({
+        author: this.$route.query.author,
+        page: this.$route.query.p
+      })
         .then(res => {
           const temp = res.data.data
-          this.data = temp.poems.length ? temp.poems : [{zhaiyao: '暂无内容'}]
+          this.data = temp.data.length ? temp.data : [{zhaiyao: '暂无内容'}]
           this.limit = temp.limit
           this.total = temp.total
           this.profile = temp.authorInfo.jieshao || '暂无内容'

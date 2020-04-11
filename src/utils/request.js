@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials = false
 
 const service = axios.create({
   baseURL: process.env.BASE_URL,

@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { getInfo } from '@/api/main'
+import { search } from '@/api/main'
 import Poem from '@/components/Poem'
 import Tab from '@/components/Tab'
 import Pagination from '@/components/Pagination'
@@ -171,22 +171,22 @@ export default {
       query.type = this.type
       switch (query.type) {
         case 'author':
-          query.p = this.curPage.author
+          query.page = this.curPage.author
           break
         case 'title':
-          query.p = this.curPage.title
+          query.page = this.curPage.title
           break
         case 'content':
-          query.p = this.curPage.content
+          query.page = this.curPage.content
           break
         default:
-          query.p = this.curPage.author
+          query.page = this.curPage.author
           break
       }
       this.loading = true
-      getInfo(query)
+      search(query)
         .then(res => {
-          const temp = res.data.data
+          const temp = res.data[this.type]
           temp.data.map(item => {
             const keyword = this.$route.query.keyword
             const reg = new RegExp(keyword, 'g')

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { getInfo } from '@/api/main'
+import { getById } from '@/api/main'
 export default {
   name: 'Article',
   data() {
@@ -30,7 +30,7 @@ export default {
   methods: {
     getArticleInfo() {
       this.loading = true
-      getInfo(this.$route.query)
+      getById(this.$route.query)
         .then(res => {
           this.data = res.data.data
           this.loading = false

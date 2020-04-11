@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { getInfo } from '@/api/main'
+import { poemList } from '@/api/main'
 import Poem from '@/components/Poem'
 import Pagination from '@/components/Pagination'
 export default {
@@ -67,7 +67,7 @@ export default {
     // 获取诗词列表
     getPoemList() {
       this.loading = true
-      getInfo(this.$route.query)
+      poemList({ page: this.$route.query.p })
         .then(res => {
           const temp = res.data.data
           this.data = temp.data
