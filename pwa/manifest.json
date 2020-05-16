@@ -1,0 +1,22 @@
+{
+  "name": "品词轩",
+  "short_name": "品词轩",
+  "description": "品词轩-在古典中寻得一方宁静",
+  "icons": [{
+      "src": "./logo192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./logo192.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "background_color": "#339999",
+  "theme_color": "#339999",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": ".",
+  "scope": "/"
+}

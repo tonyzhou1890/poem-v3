@@ -35,9 +35,9 @@ export default {
   },
   metaInfo() {
     return {
-      title: '诗词',
+      title: '品词轩',
       meta: [
-        { name: 'description', content: '简单的诗词网站，25万首诗词任欣赏。' }
+        { name: 'description', content: '在古典中寻得一方宁静。' }
       ]
     }
   },

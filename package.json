@@ -1,7 +1,7 @@
 {
-  "name": "poem-v3",
+  "name": "品词轩",
   "version": "3.3.0",
-  "description": "poem v3",
+  "description": "品词轩",
   "author": "Tony <1332988826@qq.com>",
   "private": true,
   "scripts": {
