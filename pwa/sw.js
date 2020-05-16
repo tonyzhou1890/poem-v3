@@ -1,7 +1,5 @@
-var cacheStorageKey = 'poem-0.0.1'
-var cacheList = [
-  '/'
-]
+var cacheStorageKey = 'poem-0.0.2'
+var cacheList = []
 self.addEventListener('install', e => { // install 事件，它发生在浏览器安装并注册 Service Worker 时
   // e.waitUtil 用于在安装成功之前执行一些预装逻辑
   e.waitUntil(

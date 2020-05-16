@@ -90,13 +90,15 @@ export default {
 @import "~@/styles/variables.less";
 #app {
   color: @main-text-color;
+  width: 100%;
+  height: 100%;
   .is-mobile {
-    height: calc(100vh - 42px);
+    height: calc(100% - 42px);
     min-height: auto;
     overflow: auto;
     padding: 0;
     &.is-tab-page {
-      height: calc(100vh - 82px);
+      height: calc(100% - 82px);
     }
   }
 }
