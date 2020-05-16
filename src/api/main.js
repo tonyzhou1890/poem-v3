@@ -9,6 +9,26 @@ export function home(params) {
   })
 }
 
+/**
+ * 首页随机诗词列表
+ */
+export function poemListRandom(params) {
+  return request({
+    url: `${poemPrefix}/poemListRandom`,
+    params
+  })
+}
+
+/**
+ * 专题
+ */
+export function tagsByType(params) {
+  return request({
+    url: `${poemPrefix}/tagsByType`,
+    params
+  })
+}
+
 // 获取诗词详情
 export function getById(params) {
   return request({
@@ -45,6 +65,16 @@ export function getPoemsByAuthor(params) {
 export function search(params) {
   return request({
     url: `${poemPrefix}/search`,
+    params
+  })
+}
+
+/**
+ * 根据类型获取诗词
+ */
+export function poemListByTag(params) {
+  return request({
+    url: `${poemPrefix}/poemListByTag`,
     params
   })
 }

@@ -94,8 +94,8 @@ export default {
   text-align: center;
   * {
     display: inline-block;
-    height: 34px;
-    line-height: 30px;
+    height: 26px;
+    line-height: 26px;
     box-sizing: border-box;
     vertical-align: bottom;
     user-select: none;
@@ -107,7 +107,9 @@ export default {
   }
   .button {
     cursor: pointer;
-    width: 80px;
+    width: 26px;
+    line-height: 22px;
+    border-radius: 50%;
     background-color: @bgc;
     border: 1px solid @border;
   }

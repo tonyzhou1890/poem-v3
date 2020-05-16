@@ -27,6 +27,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import '~@/styles/variables.less';
 @bgc1: #999;
 @bgc2: brown;
 @bgc3: antiquewhite;
@@ -35,10 +36,8 @@ export default {
 @border: white;
   span {
     display: inline-block;
-    background-color: @bgc3;
     padding: 3px;
     margin: 4px;
-    color: @color2;
-    border: 1px solid @border;
+    color: @third-text-color;
   }
 </style>

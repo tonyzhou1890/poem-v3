@@ -3,10 +3,19 @@
     <section
       v-for="(item, index) in data"
       :key="index"
-      class="poem">
+      class="poem"
+      :class="hasDelete ? 'has-delete' : ''"
+    >
       <router-link :to="{ name: 'Article', query: { id: item._id }}">
         <h1 class="title cp-line" v-html="item.mingcheng" />
       </router-link>
+      <div
+        v-if="hasDelete"
+        class="delete-wrapper"
+        @click="handleDelete(item)"
+      >
+        <svg-icon icon-class='delete' />
+      </div>
       <br>
       <router-link
         v-if="!disableAuthor"
@@ -21,13 +30,22 @@
 </template>
 
 <script>
+import SvgIcon from '../SvgIcon'
 export default {
+  name: 'Poem',
+  components: {
+    SvgIcon
+  },
   props: {
     data: {
       type: Array,
       required: true
     },
     disableAuthor: {
+      type: Boolean,
+      default: false
+    },
+    hasDelete: {
       type: Boolean,
       default: false
     }
@@ -43,48 +61,52 @@ export default {
       const p = 1
       const t = new Date().getTime()
       this.$router.push({ name: 'Author', query: {author, p, t} })
+    },
+    handleDelete(item) {
+      this.$emit('delete-item', item)
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-@bgc1: #999;
-@bgc2: brown;
-@bgc3: antiquewhite;
-@color: white;
-@color2: #4f4f4f;
-@border: lightgray;
+@import '~@/styles/variables.less';
 .poems-container {
   section {
-    padding: 10px;
+    padding: 20px 10px;
     box-sizing: border-box;
-    border:1px solid @border;
-    margin: 0 0 30px 0;
-    background-color: @bgc3;
+    border-bottom: 1px solid @border-color;
+    position: relative;
+    .delete-wrapper {
+      position: absolute;
+      right: 0;
+      top: 20px;
+      font-size: 20px;
+      color: red;
+      cursor: pointer;
+    }
     .title {
-      color: @color2;
+      color: @main-text-color;
       display: inline-block;
     }
     .author {
       padding: 10px 0;
       font-weight: bold;
+      color: @main-color;
       display: inline-block;
     }
     .text {
+      color: @third-text-color;
       white-space: pre-wrap;
       font-family: "Microsoft Yahei";
       line-height: 20px;
       max-height: 100px;
       overflow: hidden;
     }
-  }
-}
-
-@media screen and (max-width: 500px){
-  .poems-container {
-    section {
-      margin: 0 0 15px 0;
+    &.has-delete {
+      .title {
+        max-width: calc(~'100% - 60px');
+      }
     }
   }
 }

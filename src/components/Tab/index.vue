@@ -47,28 +47,21 @@ export default {
 </script>
 
 <style lang='less' scoped>
-@bgc: antiquewhite;
-@border: white;
-@border2: lightgray;
+@import '~@/styles/variables.less';
 .tab-container {
   text-align: left;
     padding-top: 20px;
     >.tab {
       display: inline-block;
       width: 50px;
-      height: 20px;
+      height: 26px;
       line-height: 20px;
       text-align: center;
-      background-color: @bgc;
       cursor: pointer;
-      border: 1px solid @border;
       border-bottom: 0px;
       &.active {
-        width: 56px;
-        height: 24px;
-        font-size: 20px;
-        line-height: 24px;
-        border-color: @border2;
+        font-weight: bold;
+        border-bottom: 2px solid @main-color;
       }
     }
 }

@@ -1,6 +1,10 @@
 <template>
-  <div class="main-container">
-    <router-view :key="key" />
+  <div
+    class="main-container"
+  >
+    <keep-alive include="Home,Subject">
+      <router-view :key="key" />
+    </keep-alive>
   </div>
 </template>
 
@@ -17,7 +21,7 @@ export default {
 
 <style lang="less" scoped>
 .main-container {
-  width: 900px;
+  max-width: 900px;
   min-height: calc(100vh - 70px);
   margin: auto;
   padding: 10px 0;

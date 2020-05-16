@@ -1,6 +1,13 @@
 <template>
   <div class="container padding-10" v-loading="loading">
     <div class="poems">
+      <div class="refresh-wrapper">
+        <span
+          class="refresh"
+          @click="handleRefresh"
+          @touchend="handleRefresh"
+        >换一批</span>
+      </div>
       <poem :data="poems" />
     </div>
     <aside>
@@ -10,7 +17,7 @@
 </template>
 
 <script>
-import { home } from '@/api/main'
+import { home, poemListRandom } from '@/api/main'
 import Poem from '@/components/Poem'
 import Author from '@/components/Author'
 export default {
@@ -41,30 +48,30 @@ export default {
   methods: {
     getHomeInfo() {
       this.loading = true
-      const params = {
-        home: true
-      }
-      home(params)
+      Promise.all([
+        home({ home: true }),
+        poemListRandom()
+      ])
         .then(res => {
-          this.authors = res.data.data.authors.map(item => item.xingming)
-          this.poems = res.data.data.poems
-          this.loading = false
+          this.authors = res[0].data.data.authors.map(item => item.xingming)
+          this.poems = res[1].data.data
         })
         .catch(e => {
           console.log(e)
+        })
+        .finally(e => {
           this.loading = false
         })
+    },
+    handleRefresh() {
+      this.getHomeInfo()
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-@bgc1: #999;
-@bgc2: brown;
-@bgc3: antiquewhite;
-@color: white;
-@border: lightgray;
+@import '~@/styles/variables.less';
 .container {
   width: 100%;
   margin: auto;
@@ -75,10 +82,17 @@ export default {
   .poems {
     flex: 7;
     margin: 0 30px 0 0;
+    .refresh-wrapper {
+      text-align: right;
+      .refresh {
+        cursor: pointer;
+        color: @main-color;
+        font-size: 14px;
+      }
+    }
   }
   aside {
     flex: 3;
-    border: 1px solid @border;
     height: 100%;
   }
 }

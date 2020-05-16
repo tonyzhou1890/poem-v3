@@ -46,6 +46,21 @@ export default new Router({
       component: () => import('@/views/search/index')
     },
     {
+      path: '/subject',
+      name: 'Subject',
+      component: () => import('@/views/subject/index')
+    },
+    {
+      path: '/subjectPoem',
+      name: 'SubjectPoem',
+      component: () => import('@/views/subjectPoem/index')
+    },
+    {
+      path: '/collection',
+      name: 'Collection',
+      component: () => import('@/views/collection/index')
+    },
+    {
       path: '*',
       name: '404',
       component: () => import('@/views/404/index')

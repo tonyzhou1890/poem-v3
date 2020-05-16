@@ -18,6 +18,16 @@
           :to="{ name: 'AuthorList', query: {author: 'all', p: 1} }">
           <p>作者</p>
         </router-link>
+        <router-link
+          class="cp"
+          :to="{ name: 'Subject' }">
+          <p>专题</p>
+        </router-link>
+        <router-link
+          class="cp"
+          :to="{ name: 'Collection' }">
+          <p>收藏</p>
+        </router-link>
       </div>
       <div class = "search"><input type="text" placeholder="作者/诗歌" v-model="keyword" @keyup.enter="search"><svg-icon icon-class="search" class = "iconfont icon-search" @click.native="search"></svg-icon></div>
     </div>
@@ -26,6 +36,7 @@
 
 <script>
 export default {
+  name: 'Header',
   data() {
     return {
       keyword: ''
@@ -61,71 +72,82 @@ export default {
 </script>
 
 <style lang="less">
-@bgc1: #999;
-@bgc2: brown;
-@bgc3: antiquewhite;
+@import '~@/styles/variables.less';
 @color: white;
-@border: lightgray;
 header {
   width: 100%;
   height: 40px;
-  background-color: @bgc2;
+  background-color: @main-color;
   .header {
-      width: 900px;
+    max-width: 900px;
+    height: 40px;
+    margin: auto;
+    overflow: hidden;
+    font-family: 'Times New Roman', Times, serif;
+    position: relative;
+    > div {
+      float: left;
+    }
+    .logo-icon {
+      color: @color;
       height: 40px;
-      margin: auto;
-      overflow: hidden;
-      font-family: 'Times New Roman', Times, serif;
-      position: relative;
-      >div {
-        float: left;
-      }
-      .logo-icon {
-        color: @color;
-        height: 40px;
-        line-height: 40px;
-        font-size: 30px;
-      }
-      .category {
-        margin-left: 100px;
+      line-height: 40px;
+      font-size: 30px;
+    }
+    .category {
+      margin-left: 100px;
 
-        p {
-          display: inline-block;
-          font-size: 20px;
-          line-height: 40px;
-          color: @color;
-          margin: 0 20px;
-        }
-      }
-      .search {
-        position: absolute;
-        right: 0;
-        line-height: 30px;
-        width: 200px;
-        margin-top: 5px;
-        border-radius: 15px;
-        background-color: @color;
-        overflow: hidden;
-        input {
-          border: none;
-          outline: none;
-          -webkit-appearance: none;
-          width: 170px;
-          height: 20px;
-          box-sizing: border-box;
-          padding: 0;
-          padding-left: 10px;
-        }
-        i, .icon-search {
-          cursor: pointer;
-        }
+      p {
+        display: inline-block;
+        font-size: 20px;
+        line-height: 40px;
+        color: @color;
+        margin: 0 20px;
       }
     }
+    .search {
+      position: absolute;
+      right: 0;
+      line-height: 30px;
+      width: 200px;
+      margin-top: 5px;
+      border-radius: 15px;
+      background-color: @color;
+      overflow: hidden;
+      input {
+        border: none;
+        outline: none;
+        -webkit-appearance: none;
+        width: 170px;
+        height: 20px;
+        box-sizing: border-box;
+        padding: 0;
+        padding-left: 10px;
+      }
+      i, .icon-search {
+        cursor: pointer;
+      }
+    }
+  }
 }
 @media screen and (max-width: 900px){
   header {
     .header {
       width: 100%;
+      .category {
+        margin-left: 7%;
+      }
+    }
+  }
+}
+@media screen and (max-width: 600px) {
+  header {
+    .header {
+      .category {
+        p {
+          margin: 0 10px;
+        }
+      }
     }
   }
 }

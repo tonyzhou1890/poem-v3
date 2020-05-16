@@ -1,42 +1,25 @@
 <template>
-  <div class="author-container padding-10" v-loading="loading">
-    <tab :tabs="tabs" @click-tab="clickTab" />
-    <div class="poems" v-show="curTab === '诗词'">
-      <poem class="poem-list" :data="data" :disableAuthor="true" />
-      <pagination
-        :totalPage="totalPage"
-        :curPage="curPage"
-        :pre="pre"
-        :next="next"
-        @to-page="toPage"
-        @page-change="pageChange"
-        class="poem-pagination" />
-    </div>
-    <div class="author" v-show="curTab === '简介'">
-      <p
-        class="author-profile-para"
-        v-for="(item, index) in profile"
-        :key="index"
-      >{{ item }}</p>
-      <p
-        v-if="profile.length === 0"
-        class="no-profile"
-        v-text="'暂无内容'"
-      ></p>
-    </div>
+  <div class="subject-poem-container padding-10" v-loading="loading">
+    <poem class="poem-list" :data="data" />
+    <pagination
+      :totalPage="totalPage"
+      :curPage="curPage"
+      :pre="pre"
+      :next="next"
+      @to-page="toPage"
+      @page-change="pageChange"
+      class="poem-pagination" />
   </div>
 </template>
 
 <script>
-import { getPoemsByAuthor } from '@/api/main'
+import { poemListByTag } from '@/api/main'
 import Poem from '@/components/Poem'
-import Tab from '@/components/Tab'
 import Pagination from '@/components/Pagination'
 export default {
-  name: 'Author',
+  name: 'SubjectPoem',
   components: {
     Poem,
-    Tab,
     Pagination
   },
   data() {
@@ -45,26 +28,14 @@ export default {
       loading: false,
       limit: null,
       total: null,
-      curPage: Number(this.$route.query.p),
-      tabs: [
-        {
-          name: '诗词',
-          value: 1
-        },
-        {
-          name: '简介',
-          value: 2
-        }
-      ],
-      profile: [],
-      curTab: '诗词'
+      curPage: Number(this.$route.query.p)
     }
   },
   metaInfo() {
     return {
-      title: `作者--${this.$route.query.author}`,
+      title: `专题--${this.$route.query.tag}`,
       meta: [
-        { name: 'description', content: `${this.$route.query.author}的诗词` }
+        { name: 'description', content: `${this.$route.query.tag}相关诗词` }
       ]
     }
   },
@@ -75,14 +46,14 @@ export default {
     },
     pre() {
       const temp = {}
-      temp.name = 'Author'
+      temp.name = 'SubjectPoem'
       temp.query = JSON.parse(JSON.stringify(this.$route.query))
       temp.query.p = this.curPage - 1 < 1 ? 1 : this.curPage - 1
       return temp
     },
     next() {
       const temp = {}
-      temp.name = 'Author'
+      temp.name = 'SubjectPoem'
       temp.query = JSON.parse(JSON.stringify(this.$route.query))
       temp.query.p = this.curPage + 1 > this.totalPage ? this.totalPage : this.curPage + 1
       return temp
@@ -95,20 +66,19 @@ export default {
     // 获取诗词列表
     getPoemList() {
       this.loading = true
-      getPoemsByAuthor({
-        author: this.$route.query.author,
+      poemListByTag({
+        tag: this.$route.query.type === 'congshu' ? this.$route.query.tag.replace(/[《》]/g, '') : this.$route.query.tag,
+        field: this.$route.query.type,
         page: this.$route.query.p
       })
         .then(res => {
-          const temp = res.data.data
-          this.data = temp.data.length ? temp.data : [{zhaiyao: '暂无内容'}]
+          const temp = res.data
+          this.data = temp.data
           this.limit = temp.limit
           this.total = temp.total
-          this.profile = temp.authorInfo.jieshao.split('\n')
           this.loading = false
         })
         .catch(e => {
-          console.log(e)
           this.loading = false
         })
     },
@@ -140,11 +110,7 @@ export default {
       let query = JSON.parse(JSON.stringify(this.$route.query))
       query.p = this.curPage
       // query.t = new Date().getTime()
-      this.$router.push({ name: 'Author', query })
-    },
-    // 点击tab
-    clickTab(item) {
-      this.curTab = item.name
+      this.$router.push({ name: 'SubjectPoem', query })
     }
   }
 }
@@ -152,21 +118,15 @@ export default {
 
 <style lang="less" scoped>
 @import '~@/styles/variables.less';
-.author-container {
+.subject-poem-container {
   .poem-pagination {
     margin-top: 30px;
-  }
-  .author {
-    padding: 10px;
-    box-sizing: border-box;
-    white-space: pre-line;
-    text-indent: 2em;
   }
 }
 </style>
 
 <style lang="less">
-.author-container {
+.subject-poem-container {
   .poem-list {
     text-align: center;
   }
