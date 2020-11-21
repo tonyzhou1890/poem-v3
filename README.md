@@ -1,22 +1,4 @@
-# poem-v3
-
-> poem v3
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
+# 品词轩
 
 ## 项目说明
 
@@ -35,6 +17,9 @@ npm run build --report
 - 可查看诗词详情
 
 ## 版本说明
+### v4.0.2--2020.11.21
+1. 首页使用缓存兼容 ssr
+
 ### v4.0.1--2020.05.16
 1. 解决 pwa 缓存首页导致无法更新网站的问题--全部不缓存
 2. 解决布局使用 vh 在移动端 chrome 浏览器的（错位）兼容性问题--改成百分比

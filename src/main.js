@@ -10,18 +10,19 @@ import './directives/loading' // v-loading
 
 import '@/styles/index.less'
 
-import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css'// progress bar style
+// 服务端渲染，不需要进度条了
+// import NProgress from 'nprogress' // progress bar
+// import 'nprogress/nprogress.css'// progress bar style
 
-NProgress.configure({ showSpinner: false })// NProgress Configuration
-router.beforeEach((to, from, next) => {
-  NProgress.start() // start progress bar
-  next()
-})
+// NProgress.configure({ showSpinner: false })// NProgress Configuration
+// router.beforeEach((to, from, next) => {
+//   NProgress.start() // start progress bar
+//   next()
+// })
 
-router.afterEach(() => {
-  NProgress.done() // finish progress bar
-})
+// router.afterEach(() => {
+//   NProgress.done() // finish progress bar
+// })
 
 Vue.config.productionTip = false
 

@@ -30,7 +30,8 @@ export default {
     return {
       authors: [],
       poems: [],
-      loading: false
+      loading: false,
+      useCache: true // 是否尝试使用/存储缓存
     }
   },
   metaInfo() {
@@ -48,13 +49,38 @@ export default {
   methods: {
     getHomeInfo() {
       this.loading = true
-      Promise.all([
-        home({ home: true }),
-        poemListRandom()
-      ])
+      // 请求列表
+      const reqList = [
+        home({ home: true })
+      ]
+      // 如果有缓存，使用缓存
+      if (window.cache && window.cache.homeListStr && this.useCache) {
+        this.poems = window.cache.homeListStr
+        window.cache = null
+        const cacheScript = document.getElementById('cache-script')
+        cacheScript.innerHTML = ''
+        this.useCache = false
+      } else {
+        reqList.push(poemListRandom())
+      }
+      Promise.all(reqList)
         .then(res => {
           this.authors = res[0].data.data.authors.map(item => item.xingming)
-          this.poems = res[1].data.data
+          if (res[1]) {
+            this.poems = res[1].data.data
+            if (this.useCache) {
+              // 加入缓存
+              const el = document.createElement('script')
+              el.setAttribute('id', 'cache-script')
+              el.innerHTML = `
+                window.cache = {
+                  homeListStr: ${JSON.stringify(res[1].data.data)}
+                }
+              `
+              document.head.appendChild(el)
+            }
+            this.useCache = false
+          }
         })
         .catch(e => {
           console.log(e)
