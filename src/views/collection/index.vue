@@ -28,6 +28,14 @@ export default {
       data: []
     }
   },
+  metaInfo() {
+    return {
+      title: '品词轩--收藏',
+      meta: [
+        { name: 'description', content: '品词轩--收藏' }
+      ]
+    }
+  },
   created() {
     this.handleCollection()
   },
